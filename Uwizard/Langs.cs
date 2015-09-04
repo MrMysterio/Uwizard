@@ -881,8 +881,8 @@
 "Seleccione un idioma para Uwizard." /* 171 */ 
                 }
 #endregion
-#region ENGLISH_UWIZARD
-new string[] { // English
+#region ITALIAN_UWIZARD
+		new string[] { // Italian
 "Verificato corretto dallo SHA1" /* 0 */ , 
 "Verificato incorretto dallo SHA1" /* 1 */ , 
 "Nessuna chiave inserita" /* 2 */ , 
