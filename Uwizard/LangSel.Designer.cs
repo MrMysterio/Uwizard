@@ -45,10 +45,12 @@ namespace Uwizard {
             this.lang.FormattingEnabled = true;
             this.lang.Items.AddRange(new object[] {
             "English",
-            "Français",
-            "Português",
+            "FranÃ§ais",
+            "PortuguÃªs",
             "Deutsch",
-            "Español"});
+            "EspaÃ±ol",
+            "Italiano"
+            });
             this.lang.Location = new System.Drawing.Point(12, 90);
             this.lang.Name = "lang";
             this.lang.Size = new System.Drawing.Size(268, 21);
