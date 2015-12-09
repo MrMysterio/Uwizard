@@ -98,6 +98,7 @@ namespace Uwizard {
             for (int c = 0; c < nus_dlist_abs.Count; c++) {
                 sw.WriteLine(nus_dlist.Items[c]);
                 sw.WriteLine(nus_dlist_abs[c]);
+                sw.WriteLine(nus_dlist_key[c]);
             }
             sw.WriteLine(hideKeys.Checked ? "yeshidekeys" : "nohidekeys");
             sw.Close();
@@ -154,10 +155,12 @@ namespace Uwizard {
 
                     nus_dlist.Items.Clear();
                     nus_dlist_abs.Clear();
+                    nus_dlist_key.Clear();
 
                     for (int c = 0; c < veri; c++) {
                         nus_dlist.Items.Add(sr.ReadLine());
                         nus_dlist_abs.Add(sr.ReadLine());
+                        nus_dlist_key.Add(sr.ReadLine());
                     }
                     hideKeys.Checked = sr.ReadLine() == "yeshidekeys";
 
@@ -1553,13 +1556,14 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
                 nus_usecdecrypt.Enabled = false;
                 if (nusClient.cancelnusd || !((bool)e.Result)) goto exsub;
                 string tdir = Environment.CurrentDirectory + "/nus_content/" + nus_titleid.Text + '/' + nusClient.TitleVersion;
+                bool usingTitleKey = false;
                 if (System.IO.File.Exists(tdir + "/cetk_old"))
                     if (System.IO.File.Exists(tdir + "/cetk"))
                         System.IO.File.Delete(tdir + "/cetk_old");
                     else
                         System.IO.File.Move(tdir + "/cetk_old", tdir + "/cetk");
 
-                if (!System.IO.File.Exists(tdir + "/cetk"))
+                if (!System.IO.File.Exists(tdir + "/cetk") && string.IsNullOrEmpty(nus_titleid.Text))
                     if (MessageBox.Show(uwiz_langtext[128], "Uwizard", MessageBoxButtons.YesNo) == DialogResult.Yes) { // "A ticket is required to deccrypt the contents, but a ticket for this title is not available on Nintendo's server. Would you like to select a ticket file to use? The ticket in a Wii U game disc for the same game from NUS is found in \"system\\02\\title.tik\"."
                         OpenFileDialog obox = new OpenFileDialog();
                         obox.Filter = uwiz_langtext[152]; // "All Files|*.*"
@@ -1570,6 +1574,9 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
                     } else
                         nus_usecdecrypt.Checked = false;
 
+                if (!System.IO.File.Exists(tdir + "/cetk") && !string.IsNullOrEmpty(nus_titleid.Text))
+                    usingTitleKey = true;
+
                 nus_pbarsingle.Value = 0;
                 nus_pbartotal.Value = 0;
                 usleep(250, false);
@@ -1578,6 +1585,12 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
                     try {
                         byte[] ckeydu = hex2byte(ckey_prev.Text);
                         System.IO.File.WriteAllBytes(tdir + "/ckey.bin", ckeydu);
+                        if (usingTitleKey)
+                        {
+                            byte[] tkeydu = new byte[0x1D0];
+                            hex2byte(nus_titlekey.Text).CopyTo(tkeydu, 0x1BF);
+                            System.IO.File.WriteAllBytes(tdir + "/cetk", tkeydu);
+                        }
                         gzip.decompress(Uwizard.Properties.Resources.CDecrypt, tdir + "/CDecrypt.exe");
                         gzip.decompress(Uwizard.Properties.Resources.libeay32, tdir + "/libeay32.dll");
 
@@ -1604,6 +1617,8 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
                         System.IO.File.Delete(tdir + "/ckey.bin");
                         System.IO.File.Delete(tdir + "/CDecrypt.exe");
                         System.IO.File.Delete(tdir + "/libeay32.dll");
+                        if (usingTitleKey)
+                            System.IO.File.Delete(tdir + "/cetk");
 
                         WriteStatus(uwiz_langtext[42]); // "Finished decrypting contents."
                     } catch (Exception ex) {
@@ -2072,6 +2087,7 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
         };//*/
 
         public List<string> nus_dlist_abs = new List<string>();
+        public List<string> nus_dlist_key = new List<string>();
 
         bool itcflb = false;
 
@@ -2102,6 +2118,7 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
                 string cont = nus_dlist_abs[nus_dlist.SelectedIndex];
                 nus_titleid.Text = Microsoft.VisualBasic.Strings.Left(cont, 16);
                 nus_titlever.Text = Microsoft.VisualBasic.Strings.Right(cont, cont.Length-16);
+                nus_titlekey.Text = nus_dlist_key[nus_dlist.SelectedIndex];
                 itcflb = false;
             }
             nus_add2list.Enabled = false;
@@ -2111,6 +2128,7 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
         private void nus_deletefromlist_Click(object sender, EventArgs e) {
             if (nus_dlist.SelectedIndex == -1) return;
             nus_dlist_abs.RemoveAt(nus_dlist.SelectedIndex);
+            nus_dlist_key.RemoveAt(nus_dlist.SelectedIndex);
             nus_dlist.Items.RemoveAt(nus_dlist.SelectedIndex);
             nus_titleid_TextChanged(null, null);
             nus_clearlist.Enabled = nus_dlist.Items.Count>0;
@@ -2123,6 +2141,7 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
             if (tta == "") return;
             nus_dlist.Items.Add(tta);
             nus_dlist_abs.Add(nus_titleid.Text + nus_titlever.Text);
+            nus_dlist_key.Add(nus_titlekey.Text);
             nus_titleid_TextChanged(null, null);
             nus_clearlist.Enabled = true;
             saveUwizardSettings();
@@ -2193,6 +2212,7 @@ exsub:      System.IO.Directory.Delete("uwiz_newverfiles", true);
         private void nus_clearlist_Click(object sender, EventArgs e) {
             nus_dlist.Items.Clear();
             nus_dlist_abs.Clear();
+            nus_dlist_key.Clear();
             nus_titleid_TextChanged(null, null);
             nus_clearlist.Enabled = false;
             saveUwizardSettings();

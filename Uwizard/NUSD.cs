@@ -646,6 +646,7 @@ namespace Uwizard {
                         wcNus.DownloadFileAsync(new Uri(titleUrl + tmd.Contents[i].ContentID.ToString("x8")), Path.Combine(outputDir, tmd.Contents[i].ContentID.ToString("x8")));
 
                         while (isdownloading) {
+                            System.Threading.Thread.Sleep(100);
                             if (cancelnusd) {
                                 wcNus.CancelAsync();
                                 pbs.Value = 0;

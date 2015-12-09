@@ -55,6 +55,7 @@ namespace Uwizard {
             this.nus_clearlist = new System.Windows.Forms.Button();
             this.nus_deletefromlist = new System.Windows.Forms.Button();
             this.nus_add2list = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.nus_dlist = new System.Windows.Forms.ListBox();
@@ -64,6 +65,7 @@ namespace Uwizard {
             this.nus_dstat = new System.Windows.Forms.TextBox();
             this.nus_titlever = new System.Windows.Forms.TextBox();
             this.nus_titleid = new System.Windows.Forms.TextBox();
+            this.nus_titlekey = new System.Windows.Forms.TextBox();
             this.nus_startdownload = new System.Windows.Forms.Button();
             this.page_bfstmmanager = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -496,6 +498,7 @@ namespace Uwizard {
             this.page_nus.Controls.Add(this.nus_clearlist);
             this.page_nus.Controls.Add(this.nus_deletefromlist);
             this.page_nus.Controls.Add(this.nus_add2list);
+            this.page_nus.Controls.Add(this.label3);
             this.page_nus.Controls.Add(this.label2);
             this.page_nus.Controls.Add(this.label1);
             this.page_nus.Controls.Add(this.nus_dlist);
@@ -505,6 +508,7 @@ namespace Uwizard {
             this.page_nus.Controls.Add(this.nus_dstat);
             this.page_nus.Controls.Add(this.nus_titlever);
             this.page_nus.Controls.Add(this.nus_titleid);
+            this.page_nus.Controls.Add(this.nus_titlekey);
             this.page_nus.Controls.Add(this.nus_startdownload);
             this.page_nus.Location = new System.Drawing.Point(4, 22);
             this.page_nus.Name = "page_nus";
@@ -567,6 +571,15 @@ namespace Uwizard {
             this.label1.TabIndex = 10;
             this.label1.Text = "Title ID:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Title Key:";
+            // 
             // nus_dlist
             // 
             this.nus_dlist.FormattingEnabled = true;
@@ -579,7 +592,7 @@ namespace Uwizard {
             // 
             // nus_pbartotal
             // 
-            this.nus_pbartotal.Location = new System.Drawing.Point(3, 109);
+            this.nus_pbartotal.Location = new System.Drawing.Point(3, 130);
             this.nus_pbartotal.Maximum = 10000;
             this.nus_pbartotal.Name = "nus_pbartotal";
             this.nus_pbartotal.Size = new System.Drawing.Size(501, 23);
@@ -587,7 +600,7 @@ namespace Uwizard {
             // 
             // nus_pbarsingle
             // 
-            this.nus_pbarsingle.Location = new System.Drawing.Point(3, 80);
+            this.nus_pbarsingle.Location = new System.Drawing.Point(3, 101);
             this.nus_pbarsingle.Maximum = 10000;
             this.nus_pbarsingle.Name = "nus_pbarsingle";
             this.nus_pbarsingle.Size = new System.Drawing.Size(501, 23);
@@ -607,12 +620,12 @@ namespace Uwizard {
             // 
             // nus_dstat
             // 
-            this.nus_dstat.Location = new System.Drawing.Point(3, 138);
+            this.nus_dstat.Location = new System.Drawing.Point(3, 159);
             this.nus_dstat.Multiline = true;
             this.nus_dstat.Name = "nus_dstat";
             this.nus_dstat.ReadOnly = true;
             this.nus_dstat.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.nus_dstat.Size = new System.Drawing.Size(501, 354);
+            this.nus_dstat.Size = new System.Drawing.Size(501, 333);
             this.nus_dstat.TabIndex = 5;
             // 
             // nus_titlever
@@ -636,9 +649,19 @@ namespace Uwizard {
             this.toolTip1.SetToolTip(this.nus_titleid, "NUS title ID. This MUST be 16 characters long.");
             this.nus_titleid.TextChanged += new System.EventHandler(this.nus_titleid_TextChanged);
             // 
+            // nus_titlekey
+            // 
+            this.nus_titlekey.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nus_titlekey.Location = new System.Drawing.Point(65, 48);
+            this.nus_titlekey.MaxLength = 32;
+            this.nus_titlekey.Name = "nus_titleid";
+            this.nus_titlekey.Size = new System.Drawing.Size(149, 20);
+            this.nus_titlekey.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.nus_titleid, "Encrypted Title key. This MUST be 32 characters long.");
+            // 
             // nus_startdownload
             // 
-            this.nus_startdownload.Location = new System.Drawing.Point(8, 51);
+            this.nus_startdownload.Location = new System.Drawing.Point(8, 72);
             this.nus_startdownload.Name = "nus_startdownload";
             this.nus_startdownload.Size = new System.Drawing.Size(206, 23);
             this.nus_startdownload.TabIndex = 2;
@@ -1357,6 +1380,7 @@ namespace Uwizard {
         public System.Windows.Forms.TabPage page_bfstmmanager;
         public System.Windows.Forms.TextBox nus_titlever;
         public System.Windows.Forms.TextBox nus_titleid;
+        public System.Windows.Forms.TextBox nus_titlekey;
         public System.Windows.Forms.Button nus_startdownload;
         public System.ComponentModel.BackgroundWorker nus_downloadthread;
         public System.Windows.Forms.TextBox nus_dstat;
@@ -1377,6 +1401,7 @@ namespace Uwizard {
         public System.Windows.Forms.ProgressBar nus_pbartotal;
         public System.Windows.Forms.ProgressBar nus_pbarsingle;
         public System.Windows.Forms.ListBox nus_dlist;
+        public System.Windows.Forms.Label label3;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button nus_clearlist;
