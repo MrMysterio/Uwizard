@@ -879,7 +879,7 @@
 "Archivos de flujo de sonido de Wii U|*.bfstm;*.bfwav" /* 169 */ , 
 "Archivos de sonido WAV|*.wav|Archivos de sonido MP3|*.mp4" /* 170 */ , 
 "Seleccione un idioma para Uwizard." /* 171 */ 
-                }
+                },
 #endregion
 #region ITALIAN_UWIZARD
 		new string[] { // Italian
