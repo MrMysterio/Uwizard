@@ -18,7 +18,7 @@ You must obtain copyrighted Nintendo property to use with Uwizard by yourself. S
 
 This program does NOT play Wii U game backups! It currently can only extract the files and download covers.
 
-Current Version: 1.1.3
+Current Version: 1.1.4
 
 Credits:
 - Mr. Mysterio - Programmer of Uwizard
