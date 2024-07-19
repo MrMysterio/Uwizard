@@ -27,4 +27,4 @@ Credits:
 - GameTDB - Game Covers
 - VinsCool, capito27, Phanteon, send0r - Translation
 
-Along with Uwizard, the website http://wiiubrew.net is also newly released. You can find lots of useful Wii U related information there. You can even play PONG, the first Wii U homebrew game!
+Along with Uwizard, the website http://wiiubrew.org is also newly released. You can find lots of useful Wii U related information there. You can even play PONG, the first Wii U homebrew game!
